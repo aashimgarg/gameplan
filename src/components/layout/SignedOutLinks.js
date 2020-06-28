@@ -5,12 +5,12 @@ const Navbar = () =>{
     return (
         <ul className ="right">
           <li>
-              <NavLink to='/'>
+              <NavLink to='/signup'>
                   Signup
               </NavLink>
           </li>
           <li>
-              <NavLink to='/'>
+              <NavLink to='/signin'>
                   Login
               </NavLink>
           </li>
