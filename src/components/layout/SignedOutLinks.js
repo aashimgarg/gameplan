@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const Navbar = () =>{
+const SignedOutLinks = () =>{
     return (
         <ul className ="right">
           <li>
@@ -18,4 +18,4 @@ const Navbar = () =>{
     )
 }
 
-export default Navbar;
+export default SignedOutLinks;

@@ -15,3 +15,19 @@ export const signIn = (credentials) => {
         })
     }
 }
+
+export const signOut = () => {
+  return (dispatch,getState, { getFirebase}) => {
+      //async call to database
+    const firebase = getFirebase();
+
+    firebase
+       .auth()
+       .signOut()
+       .then(() => { 
+        dispatch({ type:'LOGOUT_SUCCESS' })
+      }).catch( error =>{
+        dispatch ({ type: 'LOGOUT_ERROR' } , error)
+      })
+  }
+}
