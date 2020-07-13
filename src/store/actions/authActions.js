@@ -31,3 +31,34 @@ export const signOut = () => {
       })
   }
 }
+
+export const signUp = (userData) => {
+  return (dispatch , getState, { getFirebase , getFirestore}) => {
+    const firebase = getFirebase() ;
+    const firestore = getFirestore() ;
+   
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(
+        userData.email,
+        userData.password
+     ).then((res) => {
+       // res.user will contain the information about the user which just signed up
+        return (
+         firestore
+           .collection('users')
+           .doc(res.user.uid)
+           // .add method creates a new user id so used set method
+           .set({
+             firstName: userData.firstName,
+             lastName: userData.firstName,
+             initials: userData.firstName[0] + userData.lastName[0]
+           })
+     )} ).then(() => {
+       dispatch({ type: 'SIGNUP_SUCCESS'})
+       }).catch(err => {
+         dispatch({ type: 'SIGNUP_ERROR', err})
+       })
+
+  }
+}

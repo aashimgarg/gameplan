@@ -16,11 +16,12 @@ class CreateProject extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
    this.props.createProject(this.state)
+   this.props.history.push('/');
   }
   render() {
     const { auth } = this.props
 
-    if(!auth.id) {
+    if(!auth.uid) {
       return <Redirect to = '/signin' />
     }
 
@@ -61,5 +62,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(CreateProject)
-
-
