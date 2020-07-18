@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/firebase-gameplan/static/css/main.cc8c5bb0.chunk.css",
+    "main.js": "/firebase-gameplan/static/js/main.f373ee1a.chunk.js",
+    "main.js.map": "/firebase-gameplan/static/js/main.f373ee1a.chunk.js.map",
+    "runtime-main.js": "/firebase-gameplan/static/js/runtime-main.57167142.js",
+    "runtime-main.js.map": "/firebase-gameplan/static/js/runtime-main.57167142.js.map",
+    "static/js/2.6186d2f9.chunk.js": "/firebase-gameplan/static/js/2.6186d2f9.chunk.js",
+    "static/js/2.6186d2f9.chunk.js.map": "/firebase-gameplan/static/js/2.6186d2f9.chunk.js.map",
+    "index.html": "/firebase-gameplan/index.html",
+    "precache-manifest.3027870a389d5d327ba5b3f6aa0ceefa.js": "/firebase-gameplan/precache-manifest.3027870a389d5d327ba5b3f6aa0ceefa.js",
+    "service-worker.js": "/firebase-gameplan/service-worker.js",
+    "static/css/main.cc8c5bb0.chunk.css.map": "/firebase-gameplan/static/css/main.cc8c5bb0.chunk.css.map",
+    "static/js/2.6186d2f9.chunk.js.LICENSE.txt": "/firebase-gameplan/static/js/2.6186d2f9.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.57167142.js",
+    "static/js/2.6186d2f9.chunk.js",
+    "static/css/main.cc8c5bb0.chunk.css",
+    "static/js/main.f373ee1a.chunk.js"
+  ]
+}

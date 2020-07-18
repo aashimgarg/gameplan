@@ -51,7 +51,7 @@ export const signUp = (userData) => {
            // .add method creates a new user id so used set method
            .set({
              firstName: userData.firstName,
-             lastName: userData.firstName,
+             lastName: userData.lastName,
              initials: userData.firstName[0] + userData.lastName[0]
            })
      )} ).then(() => {
