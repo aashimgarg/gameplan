@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp} from '../../store/actions/authActions'
+import Spinner from "../spinner";
 
 class SignUp extends Component {
 
@@ -22,7 +23,11 @@ class SignUp extends Component {
     this.props.signUp(this.state)
   }
   render() {
-    const { auth , authError } = this.props
+    const { 
+       auth ,
+       authError,
+       isSigningUp
+      } = this.props
      
     if (auth.uid) {
       return <Redirect to = '/' />
@@ -48,7 +53,19 @@ class SignUp extends Component {
             <input type="text" id='lastName' onChange={this.handleChange} />
           </div>
           <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
+            <button className="btn pink lighten-1 z-depth-0">
+             <div style ={{justifyContent:'center',display: 'flex'}}>
+                Sign Up&nbsp;
+                  {isSigningUp ? (
+                    <Spinner 
+                      style={{ margin: "0px 10px"}}
+                      color="white"
+                      width="16px"
+                      height="16px"
+                    />
+                  ) : null}
+             </div>
+            </button>
             <div className = "red-text center">
               { authError ? <p> { authError} </p> : null }
             </div>
@@ -62,7 +79,8 @@ class SignUp extends Component {
 const mapStateToProps = state => {
   return {
     auth: state.firebase.auth,
-    authError: state.auth.authError
+    authError: state.auth.authError,
+    isSigningUp: state.auth.isSigningUp
   }
 }
 

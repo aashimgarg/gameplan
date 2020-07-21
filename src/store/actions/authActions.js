@@ -1,8 +1,14 @@
+const requestLogin = () => {
+  return {
+    type:'LOGIN_REQUEST'
+  }
+}
+
 export const signIn = (credentials) => {
-    return (dispatch,getState, { getFirebase}) => {
+    return (dispatch,getState, { getFirebase}) => {      
         //async call to database
       const firebase = getFirebase();
-
+      dispatch(requestLogin());
       firebase
          .auth()
          .signInWithEmailAndPassword(
@@ -32,11 +38,19 @@ export const signOut = () => {
   }
 }
 
+  
+const requestSignup = () => {
+  return {
+    type: 'SIGNUP_REQUEST'
+  };
+};
+
 export const signUp = (userData) => {
   return (dispatch , getState, { getFirebase , getFirestore}) => {
     const firebase = getFirebase() ;
     const firestore = getFirestore() ;
    
+    dispatch(requestSignup())
     firebase
       .auth()
       .createUserWithEmailAndPassword(
