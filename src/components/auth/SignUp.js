@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { signUp} from '../../store/actions/authActions'
+import { signUp } from '../../store/actions/authActions'
 import Spinner from "../spinner";
 
 class SignUp extends Component {
@@ -11,30 +11,53 @@ class SignUp extends Component {
     password: '',
     firstName: '',
     lastName: '',
+    profileImage: {
+      image: '',
+      profileUrl: ''
+    }
   }
-  
+
   handleChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
     })
   }
+
+  inputImageHandler = (event) => {
+    event.preventDefault();
+    let reader = new FileReader();
+    console.log(reader,event.target.files)
+    let file = event.target.files[0];
+    reader.onloadend = () => {
+      this.setState({
+        profileImage: {
+          image: file,
+          profileUrl: reader.result,
+        }
+      });
+    };
+    reader.readAsDataURL(file);
+  };
+
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.signUp(this.state)
+    const { email, password,profileImage, ...data } = this.state
+    this.props.signUp(email, password, data, profileImage)
   }
   render() {
-    const { 
-       auth ,
-       authError,
-       isSigningUp
-      } = this.props
-     
-    if (auth.uid) {
-      return <Redirect to = '/' />
+    const {
+      signUpError,
+      isSigningUp,
+      isValidate
+    } = this.props
+
+    if (isValidate) {
+      return <Redirect to='/' />
     }
+
     return (
       <div className="container">
-        <form className="white" onSubmit={this.handleSubmit}>
+        <form style={{ width: '85%' }} className="white" onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">Sign Up</h5>
           <div className="input-field">
             <label htmlFor="email">Email</label>
@@ -52,22 +75,33 @@ class SignUp extends Component {
             <label htmlFor="lastName">Last Name</label>
             <input type="text" id='lastName' onChange={this.handleChange} />
           </div>
+          <br />
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>Profile Pic</span>
+              <input type="file"  onChange={this.inputImageHandler} />
+            </div>
+            <div class="file-path-wrapper">
+              <input required class="file-path validate" type="text"/>
+            </div>
+          </div>
           <div className="input-field">
             <button className="btn pink lighten-1 z-depth-0">
-             <div style ={{justifyContent:'center',display: 'flex'}}>
+              <div style={{ justifyContent: 'center', display: 'flex' }}>
                 Sign Up&nbsp;
                   {isSigningUp ? (
-                    <Spinner 
-                      style={{ margin: "0px 10px"}}
-                      color="white"
-                      width="16px"
-                      height="16px"
-                    />
-                  ) : null}
-             </div>
+                  <Spinner
+                    style={{ margin: "0px 10px" }}
+                    color="white"
+                    width="16px"
+                    height="16px"
+                  />
+                ) : null}
+              </div>
             </button>
-            <div className = "red-text center">
-              { authError ? <p> { authError} </p> : null }
+            <div className="red-text center">
+              {signUpError ?
+                <p> Already have an account </p> : null}
             </div>
           </div>
         </form>
@@ -78,15 +112,15 @@ class SignUp extends Component {
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth,
-    authError: state.auth.authError,
-    isSigningUp: state.auth.isSigningUp
+    isValidate: state.auth.isValidate,
+    signUpError: state.auth.signUpError,
+    isSigningUp: state.auth.isSigningUp,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    signUp: (userData) => dispatch(signUp(userData))
+    signUp: (email, password, data,profileImage) => dispatch(signUp(email, password, data,profileImage))
   }
 }
 

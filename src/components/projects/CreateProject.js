@@ -19,9 +19,9 @@ class CreateProject extends Component {
    this.props.history.push('/');
   }
   render() {
-    const { auth } = this.props
+    const { isValidate } = this.props
 
-    if(!auth.uid) {
+    if(!isValidate) {
       return <Redirect to = '/signin' />
     }
 
@@ -48,7 +48,7 @@ class CreateProject extends Component {
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth
+    isValidate: state.auth.isValidate,
   } 
 }
 

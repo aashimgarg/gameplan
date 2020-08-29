@@ -1,6 +1,8 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage'; 
+import 'firebase/analytics';
 
 var firebaseConfig = {
     apiKey: "AIzaSyB0JmZqnZdE5QqIvVIYpRB-apgoHENMnJM",
@@ -13,7 +15,12 @@ var firebaseConfig = {
     measurementId: "G-RNXR4GMH6Q"
   };
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.firestore().settings({ timestampsInSnapshots: true });
   
+  export const myFirebase = firebase.initializeApp(firebaseConfig);
+  myFirebase.analytics();
+  const baseDb = myFirebase.firestore();
+  export const db = baseDb;
+
+  export const storage = myFirebase.storage().ref();
+
   export default firebase 

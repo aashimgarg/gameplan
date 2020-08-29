@@ -1,61 +1,185 @@
 const initState = {
-  authError: null,
+  isValidate: false,
   isLoggingUp: false,
-  isSigningUp: false
+  loginError: false,
+  isFetchingData: false,
+  fetchingDataError: false,
+  isSigningUp: false,
+  signUpError: false,
+  isCreatingUser: false,
+  userCreated: false,
+  userCreationError: false,
+  isLoggingOut: false,
+  logoutError: false,
+  isVerifying: false,
+  verifyingError: false,
+  isPasswordResetEmailSend: false,
+  forgetPasswordFailure: false,
+  isForgetPasswordRequested: false,
+  user: {},
+  userData: {}
 }
 
 const authReducer = (state = initState, action) => {
   switch (action.type) {
+
+    // LOGIN_FEATURE
+
     case 'LOGIN_REQUEST':
       return {
         ...state,
-        authError: null,
-        isLoggingUp: true
-      }
+        isLoggingUp: true,
+        loginError: false,
+      };
     case 'LOGIN_SUCCESS':
       return {
         ...state,
-        authError: null,
-        isLoggingUp: false
-      }
-    case 'LOGIN_ERROR':
+        isLoggingUp: false,
+        loginError: false,
+        isValidate: true,
+        user: action.user,
+      };
+    case 'LOGIN_FAILURE':
       return {
         ...state,
-        authError: 'Login Failed',
-        isLoggingUp: false
+        isLoggingUp: false,
+        isValidate: false,
+        loginError: true,
+      };
+
+    // FETCH_DATA_REQUEST_HANDLER
+
+    case 'FETCH_DATA_REQUEST':
+
+      return {
+        ...state,
+        isFetchingData: true,
+        fetchingDataError: false,
+      }
+    case 'FETCH_DATA_SUCCESS':
+
+      return {
+        ...state,
+        isFetchingData: false,
+        fetchingDataError: false,
+        userData: action.data
+      }
+    case 'FETCH_DATA_FAILURE':
+      return {
+        ...state,
+        isFetchingData: false,
+        fetchingDataError: true,
+      };
+
+    // LOGOUT_FEATURE
+
+    case 'LOGOUT_REQUEST':
+      return {
+        ...state,
+        isLoggingOut: true,
+        logoutError: false,
       }
     case 'LOGOUT_SUCCESS':
-      console.log('----LOGOUT SUCCESS------')
       return {
         ...state,
-        authError: null
+        isLoggingOut: false,
+        logoutError: false,
+        isValidate: false,
+        user: {},
+        userData: {}
       }
-    case 'LOGOUT_ERROR':
+    case 'LOGOUT_FAILURE':
       return {
         ...state,
-        authError: 'Logout Failed'
+        isLoggingOut: false,
+        logoutError: true,
       }
+
+    // SIGNUP_FEATURE
+
     case 'SIGNUP_REQUEST':
-      console.log('----LOGOUT SUCCESS------')
       return {
         ...state,
-        authError: null,
-        isSigningUp:true
+        isSigningUp: true,
+        signUpError: false
       }
     case 'SIGNUP_SUCCESS':
-      console.log('----LOGOUT SUCCESS------')
       return {
         ...state,
-        authError: null,
-        isSigningUp:false
+        isSigningUp: false,
+        isValidate: true,
+        signUpError: false,
+        user: action.user,
       }
-    case 'SIGNUP_ERROR':
+    case 'SIGNUP_FAILURE':
       return {
         ...state,
-        authError: action.err.message,
-        // the error is according to the action i.e if email is wrong then please enter correct email similar with password
-       isSigningUp:false
+        isSigningUp: false,
+        signUpError: true,
       }
+
+    // CREATE USER HANDLER
+
+    case 'CREATE_USER_REQUEST':
+      return {
+        ...state,
+        isCreatingUser: true,
+        userCreated: false,
+        userCreationError: false,
+      }
+    case 'CREATE_USER_SUCCESS':
+      return {
+        ...state,
+        isCreatingUser: false,
+        userCreated: true,
+        userCreationError: false,
+        userData: action.user
+      }
+    case 'CREATE_USER_FAILURE':
+      return {
+        ...state,
+        isCreatingUser: false,
+        userCreated: false,
+        userCreationError: true,
+      }
+
+    // VERIFY AUTH
+
+    case 'VERIFY_REQUEST':
+      return {
+        ...state,
+        isVerifying: true,
+        verifyingError: false,
+      }
+    case 'VERIFY_SUCCESS':
+      return {
+        ...state,
+        isVerifying: false,
+      }
+
+    // FORGOT PASSWORD
+
+    case 'FORGET_PASSWORD_REQUEST':
+      return {
+        ...state,
+        isForgetPasswordRequested: true,
+        isPasswordResetEmailSend: false,
+        forgetPasswordFailure: false,
+      };
+    case 'FORGET_PASSWORD_SUCCESS':
+      return {
+        ...state,
+        isForgetPasswordRequested: false,
+        isPasswordResetEmailSend: true,
+        forgetPasswordFailure: false,
+      };
+    case 'FORGET_PASSWORD_FAILURE':
+      return {
+        ...state,
+        isForgetPasswordRequested: false,
+        forgetPasswordFailure: true,
+        isPasswordResetEmailSend: false,
+      };
     default:
       return state;
   }
@@ -63,4 +187,3 @@ const authReducer = (state = initState, action) => {
 };
 
 export default authReducer;
-

@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
 import Spinner from "../spinner";
+import { Link } from "react-router-dom";
+
 
 class SignIn extends Component {
   state = {
@@ -11,8 +13,9 @@ class SignIn extends Component {
   }
   
   handleChange = (e) => {
+    const {id,value} = e.target
     this.setState({
-      [e.target.id]: e.target.value
+      [id]: value
     })
   }
 
@@ -23,18 +26,17 @@ class SignIn extends Component {
 
   render() {
     const {
-       authError , 
-       auth ,
-       isLoggingUp
-      } = this.props
-      
-    if (auth.uid) {
-      return <Redirect to = '/' />
-    }
+       isLoggingUp ,
+       loginError,
+       isValidate
+      } = this.props  
 
-    return (
+      if(isValidate)
+      return <Redirect to='/' />
+
+      return (
       <div className="container">
-        <form className="white" onSubmit={this.handleSubmit}>
+        <form style={{width:'85%'}} className="white" onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">Sign In</h5>
           <div className="input-field">
             <label htmlFor="email">Email</label>
@@ -58,8 +60,16 @@ class SignIn extends Component {
                   ) : null}
              </div>
             </button>
+            <div>
+              <strong>
+                {" "}
+                <Link to="/resetPassword">Forgot your password?</Link>{" "}
+              </strong>
+            </div>
             <div className= "red-text center">
-              { authError ? <p> {authError} </p>  : null }
+              { loginError ? (
+                <strong> Invalid Credentials </strong> ) :
+                 null }
             </div>
           </div>
         </form>
@@ -70,9 +80,9 @@ class SignIn extends Component {
 
 const mapStateToProps = state => {
   return {
-    authError: state.auth.authError,
-    auth:state.firebase.auth,
-    isLoggingUp:state.auth.isLoggingUp
+    isLoggingUp: state.auth.isLoggingUp,
+    loginError: state.auth.loginError,
+    isValidate:state.auth.isValidate
   }
 }
 

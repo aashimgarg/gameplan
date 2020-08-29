@@ -4,22 +4,19 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore , applyMiddleware , compose } from 'redux'
-import rootReducer from './store/reducers/rootReducer'
+import rootReducer from '../src/store/rootReducer'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-import { reduxFirestore,getFirestore } from 'redux-firestore'
-import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
-import fbConfig from './config/fbConfig'
+import { verifyAuth } from '../src/store/actions/authActions'
 
 const store = createStore(rootReducer ,
   compose( 
-    applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
-    reactReduxFirebase(fbConfig, {useFirestoreForProfile: true,userProfile: 'users',  attachAuthIsReady: true}),
-    reduxFirestore(fbConfig) 
+    applyMiddleware(thunk.withExtraArgument()),
     )
   );
+  
+  store.dispatch(verifyAuth());
 
-  store.firebaseAuthIsReady.then(() => {
     ReactDOM.render(
       <React.StrictMode>
         <Provider store={store}>
@@ -28,7 +25,6 @@ const store = createStore(rootReducer ,
       </React.StrictMode>,
       document.getElementById('root')
     );
-  })
 
 
 // If you want your app to work offline and load faster, you can change

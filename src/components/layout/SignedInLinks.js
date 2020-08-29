@@ -5,23 +5,28 @@ import { signOut } from '../../store/actions/authActions'
 
 const SignedInLinks = ({
     signOut , 
-    profile
+    userData
     }) =>{
     return (
       <ul className ="right">
           <li>
-              <NavLink to='/create'>
+              <NavLink style={{outline:'none'}}to='/create'>
                   New Project
               </NavLink>
           </li>
           <li>
-              <a onClick = {signOut}>
+              <NavLink style={{outline:'none'}}to='/myprojects'>
+                  My Projects
+              </NavLink>
+          </li>
+          <li>
+              <a style={{outline:'none'}}onClick = {signOut}>
                   Log Out
               </a>
           </li>
           <li>
               <NavLink to='/' className ='btn btn-floating blue lighten-1'>
-                  {profile.initials}
+                  {userData.initials}
               </NavLink>
           </li>
       </ul> 
