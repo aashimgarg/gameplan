@@ -5,10 +5,10 @@ import SignedOutLinks from './SignedOutLinks'
 import { connect } from 'react-redux'
 
 const Navbar = props =>{
-    const { isValidate , userData } = props
-    const links = isValidate 
-                ? <SignedInLinks userData={userData}  /> 
-                : <SignedOutLinks />
+    const { isValidate , userData , isVerifying } = props
+
+    const links = isVerifying ? null : isValidate ? <SignedInLinks userData={userData}  /> : <SignedOutLinks /> ;
+
     return (
        <nav className = "nav-wrapper grey darken-3">
            <div className ="container">
@@ -22,7 +22,8 @@ const Navbar = props =>{
 const mapStateToProps = state => {
     return {
         isValidate:state.auth.isValidate,
-        userData:state.auth.userData
+        userData:state.auth.userData,
+        isVerifying:state.auth.isVerifying
     }
 }
 

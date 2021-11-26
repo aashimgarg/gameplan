@@ -7,14 +7,15 @@ import { Redirect } from 'react-router-dom'
 const  MyProjects = ({
   dispatch,
   personalProjects,
-  isValidate
+  isValidate,
+  isVerifying
 }) => {
  
   React.useEffect(() => {
     dispatch(fetchPersonalProjects());
   }, []);
 
-  if (!isValidate){
+  if (!isValidate && !isVerifying){
     return <Redirect to = '/signin' />
   }
     return (
@@ -38,7 +39,8 @@ const  MyProjects = ({
 const mapStateToProps = state => {
   return {
     personalProjects: state.project.personalProjects,
-    isValidate:state.auth.isValidate
+    isValidate:state.auth.isValidate,
+    isVerifying:state.auth.isVerifying
   }
 }
 

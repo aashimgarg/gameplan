@@ -8,14 +8,15 @@ const  Dashboard = ({
   projects,
   dispatch,
   isFetchingProjects,
-  isValidate
+  isValidate,
+  isVerifying
 }) => {
 
   React.useEffect(() => {
     dispatch(fetchAllProjects()); 
   }, []);
 
-   if (!isValidate){
+   if (!isValidate && !isVerifying){
      return <Redirect to = '/signin' />
    }
 
@@ -36,7 +37,8 @@ const mapStateToProps = state => {
   return {
     projects: state.project.projects,
     isFetchingProjects:state.project.isFetchingProjects,
-    isValidate:state.auth.isValidate
+    isValidate:state.auth.isValidate,
+    isVerifying:state.auth.isVerifying
   }
 }
 

@@ -12,7 +12,8 @@ const ProjectDetails = ({
   dispatch,
   isValidate,
   user,
-  history
+  history,
+  isVerifying
 }) => {
   
   React.useEffect(() => {
@@ -30,7 +31,7 @@ const ProjectDetails = ({
   }
  
  
-  if (!isValidate) {
+  if (!isValidate && !isVerifying) {
     return <Redirect to='/signin' />
   }
   
@@ -61,7 +62,8 @@ const mapStateToProps = (state) => {
   return {
     currentProject: state.project.currentProject,
     isValidate: state.auth.isValidate,
-    user: state.auth.user
+    user: state.auth.user,
+    isVerifying:state.auth.isVerifying
   }
 }
 
