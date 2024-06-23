@@ -201,6 +201,7 @@ export const signUp = (email, password, data, profileImage ) => async (dispatch)
       await dispatch(storeImage(profileImage, user.uid));
     }
   } catch (error) {
+    alert(error.message)
     dispatch(signUpError());
   }
 };

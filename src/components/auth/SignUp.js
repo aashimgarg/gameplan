@@ -99,10 +99,6 @@ class SignUp extends Component {
                 ) : null}
               </div>
             </button>
-            <div className="red-text center">
-              {signUpError ?
-                <p> Already have an account </p> : null}
-            </div>
           </div>
         </form>
       </div>
